@@ -1,0 +1,80 @@
+<html> 
+
+<head>
+    <link rel="stylesheet" href="style.css">
+
+
+</head>
+<body onload="setData()">
+    <h1>Edit Student</h1>
+    FullName : <input type="text" id="name"><br>
+    Email : <input type="text" id="email"><br>
+    Faculty : <input type="text" id="facult"><br>
+    BirthDate : <input type="date" id="bd"><br>
+    <input type="button" id="add" value="update Student" onclick="updateStudent()">
+
+ 
+
+
+    <script>
+        let id = sessionStorage.getItem('id')
+        async function setData(){
+        let resp = await fetch(`http://localhost:8000/api/students/${id}`)
+        if(resp.ok){
+            let student = await resp.json();
+            document.getElementById('name').value = student.fullName;
+            document.getElementById('email').value = student.email;
+            document.getElementById('facult').value = student.faculty;
+            let dateEl = document.getElementById('bd');
+            let date = new Date(student.birthDate);
+            let year = date.getFullYear();
+            let month = date.getMonth()+1;
+            let dt = date.getDate();
+            if(dt<10){
+                dt = '0' + dt;
+            }
+            if(month<10){
+                month = '0' + month;
+
+            }
+            dateEl.value = year + '-' + month + '-' + dt;
+
+            }else {
+                console.log("errorrr");
+            }
+                }
+                async function updateStudent(){
+       let fullNameEl = document.getElementById('name');
+       let emailEl = document.getElementById('email');
+      let facultyEl = document.getElementById('facult');
+     let bdEl = document.getElementById('bd');
+      let grades = getGrades();
+        let obj = {fullName : fullNameEl.value ,
+                   email : emailEl.value,
+                  faculty : facultyEl.value,
+                  birthDate : bdEl.value ,
+                  grades : grades
+             };
+          let resp = await fetch(`http://localhost:8000/api/students/${id}`,{
+               method : 'put' ,
+               body : JSON.stringify(obj),
+               headers : {"Content-type" : "application/json"}                
+          })
+           if (resp.ok){
+              let data = await resp.json();           
+            }else{
+           console.log("error");
+            }
+            location.href = "mainPage.html"
+     }
+     async function getGrades(){
+        let resp = await fetch(`http://localhost:8000/api/students/${id}`)
+        if(resp.ok){
+            let student = await resp.json();
+            return student.grades;
+     }
+    }
+
+    </script>
+</body>
+</html>

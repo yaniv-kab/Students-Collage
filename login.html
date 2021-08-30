@@ -1,0 +1,44 @@
+<html>
+
+
+
+<head>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <h1> Login To Your User </h1>
+    Name :  <input type="text" id="name"></br></br>
+    Email :  <input type="text" id="email"></br></br>
+    <input type="button" onclick="loginToMain()" value="Login">
+
+
+
+
+    <script>
+        let nameEl = document.getElementById('name');
+        let emailEl = document.getElementById('email');
+        async function loginToMain(){
+    
+            let resp = await fetch('https://jsonplaceholder.typicode.com/users');
+            if (resp.ok){
+                let users = await resp.json();
+                for (let i = 0 ; i<10 ; i++){
+                    if(users[i].name==nameEl.value && users[i].email==emailEl.value){
+                        location.href="mainPage.html";
+                    }
+                    }
+                }else{
+                        alert("userName or Email do not match");
+                }
+            }
+        
+
+
+
+
+    </script>
+</body>
+</html>

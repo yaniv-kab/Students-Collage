@@ -1,0 +1,106 @@
+<html>
+
+
+
+<head>
+
+    <link rel="stylesheet" href="style.css">
+
+
+
+</head>
+<body onload="getAllStudents()">
+   <h1>Collage Students </h1>
+   <table border="8" id="tbl">
+       <tr>
+           <td><b>Full Name</b></td>       
+           <td><b>Faculty</b></td>
+           <td><b>Grades</b></td>
+           <td><b>Edit </b></td>
+           <td><b>Delete</b></td> 
+
+       </tr>
+   </table></br></br>
+   <input type="button" value="Create New Student" id="crt" onclick="createNewStudent()">
+    <script>
+        let counter = 1
+        async function getAllStudents(){
+         let tableEl = document.getElementById('tbl');
+         let resp = await fetch('http://localhost:8000/api/students')
+         if (resp.ok){
+             let students = await resp.json();
+             for(let i = 0 ; i<students.length ; i++){
+                 let trEl = document.createElement('tr')
+                 let td1El = document.createElement('td')
+                 let td2El = document.createElement('td')
+                 let td3El = document.createElement('td')
+                 let td4El= document.createElement('td')
+                 let td5El = document.createElement('td')
+                 let editEl = document.createElement('a') 
+                 let deleteEl = document.createElement('a')
+                 // design elementts
+                 trEl.id = students[i]._id;
+                 td1El.id = counter;
+                 let nameLink = document.createElement('a');
+                 nameLink.href = "student.html";
+                 nameLink.innerHTML = students[i].fullName
+                 nameLink.addEventListener( "click" ,()=>{
+                     sessionStorage.setItem("id",trEl.id)
+                 })
+                 td2El.innerText = students[i].faculty;
+                let gradeLink = document.createElement('a');
+                gradeLink.href = "grades.html";
+                gradeLink.innerHTML = 'click to see grades';
+                gradeLink.addEventListener("click" , ()=>{
+                    sessionStorage.setItem("id",trEl.id)
+                })
+                editEl.href = "editStudent.html"
+                 editEl.innerHTML = "Edit";
+                 editEl.addEventListener("click",()=>{
+                    sessionStorage.setItem("id",trEl.id);
+                    editEl.href = 'editStudent.html';
+                 })
+                 deleteEl.href= '';
+                 deleteEl.innerHTML = "Delete";
+                let createBtnEl = document.getElementById('crt')
+                deleteEl.addEventListener("click" ,async () => {
+                tableEl.deleteRow(td1El.id);
+                let resp = await fetch(`http://localhost:8000/api/students/${trEl.id}`,{
+                method : "delete"
+               }) 
+      
+   
+                         
+               })
+                //appendChild
+                tableEl.appendChild(trEl)
+                trEl.appendChild(td1El)
+                trEl.appendChild(td2El)
+                trEl.appendChild(td3El)
+                trEl.appendChild(td4El)
+                trEl.appendChild(td5El)
+                td4El.appendChild(editEl);
+                td5El.appendChild(deleteEl);
+                td1El.appendChild(nameLink);
+                td3El.appendChild(gradeLink);
+                counter++
+
+
+
+         }
+        }else{
+            console.log("errorrrrr");
+        }
+    }
+    function createNewStudent(){
+
+        location.href = "createStudent.html"
+
+    }
+    
+
+
+
+    </script>
+</body>
+</html>
