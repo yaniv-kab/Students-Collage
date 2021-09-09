@@ -10,6 +10,5 @@ npm init --y
 node index.js
 ```
 #### now open login.html and Take The Name And Email From This API : https://jsonplaceholder.typicode.com/users
-## --> Dont Download The Node_Modules file In The Server <--
 
 
