@@ -25,14 +25,18 @@
             let resp = await fetch('https://jsonplaceholder.typicode.com/users');
             if (resp.ok){
                 let users = await resp.json();
-                for (let i = 0 ; i<10 ; i++){
+                for (let i = 0 ; i<users.length ; i++){
                     if(users[i].name==nameEl.value && users[i].email==emailEl.value){
                         location.href="mainPage.html";
+                        return;
                     }
-                    }
-                }else{
-                        alert("userName or Email do not match");
                 }
+                }
+                if(nameEl.value == '' || emailEl.value=='' ){
+                        alert("There is no UserName or Password");
+                    }else{
+                        alert("UserName or Password dont match")
+                    }
             }
         
 
