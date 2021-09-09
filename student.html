@@ -29,7 +29,7 @@
         let bdEl = document.getElementById('bd');
         let gradesEl = document.getElementById('grades');
         async function setData(){
-            let resp = await fetch(`http://localhost:8000/api/students/${id}`)
+            let resp = await fetch(`https://students-merndb.herokuapp.com/api/students/${id}`)
             if (resp.ok){
                 let students = await resp.json();
                 fullNameEl.innerText = students.fullName;

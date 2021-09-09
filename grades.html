@@ -29,7 +29,7 @@
             let id = sessionStorage.getItem('id');
             let gradesEl = document.getElementById('grades');
             async function setData(){
-                let resp = await fetch(`http://localhost:8000/api/students/${id}`)
+                let resp = await fetch(`https://students-merndb.herokuapp.com/api/students/${id}`)
                 if (resp.ok){
                     let student = await resp.json();
                     for(let i = 0 ; i<student.grades.length;i++){
@@ -67,7 +67,7 @@
                                 date : txt1El.value,
                                 grade : txt2El.value
                             }
-                            let resp = await fetch(`http://localhost:8000/api/grades/${student._id}/${student.grades[i]._id}`,{
+                            let resp = await fetch(`https://students-merndb.herokuapp.com/api/grades/${student._id}/${student.grades[i]._id}`,{
                     method:'put',
                     body:JSON.stringify(gradeToUpdate),
                     headers:{"Content-type":"application/json"}
@@ -81,7 +81,7 @@
                         deleteEl.type = "button"
                         deleteEl.value = "Delete Grade"
                         deleteEl.addEventListener("click" , async () => {
-                            let resp2 = await fetch(`http://localhost:8000/api/grades/${student._id}/${student.grades[i]._id}`,{
+                            let resp2 = await fetch(`https://students-merndb.herokuapp.com/api/grades/${student._id}/${student.grades[i]._id}`,{
                     method:'delete',
                 })
                 location.href ="grades.html"
@@ -104,14 +104,14 @@
                 }
             }
             async function createGrades(){
-                let resp = await fetch(`http://localhost:8000/api/students/${id}`)
+                let resp = await fetch(`https://students-merndb.herokuapp.com/api/students/${id}`)
                 if(resp.ok){
                     let student = await resp.json();
                     let gradeDate = document.getElementById("dateId").value;
                     let grade = document.getElementById("gradeId").value;
                     let gradeToAdd = {date:gradeDate,grade : grade}
                     student.grades.push(gradeToAdd)
-                    let resp2 = await fetch(`http://localhost:8000/api/grades/${id}`,{
+                    let resp2 = await fetch(`https://students-merndb.herokuapp.com/api/grades/${id}`,{
                     method:'post',
                     body:JSON.stringify(gradeToAdd),
                     headers:{"Content-type":"application/json"}

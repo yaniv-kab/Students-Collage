@@ -30,7 +30,7 @@
                    birthDate : bdEl.value ,
                    grades : grades
                  } 
-            let resp = await fetch(`http://localhost:8000/api/students`,{
+            let resp = await fetch(`https://students-merndb.herokuapp.com/api/students`,{
                 method : 'post' ,
                 body : JSON.stringify(obj),
                 headers : {"Content-type" : "application/json"}                

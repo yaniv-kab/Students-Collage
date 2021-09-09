@@ -19,7 +19,7 @@
     <script>
         let id = sessionStorage.getItem('id')
         async function setData(){
-        let resp = await fetch(`http://localhost:8000/api/students/${id}`)
+        let resp = await fetch(`https://students-merndb.herokuapp.com/api/students/${id}`)
         if(resp.ok){
             let student = await resp.json();
             document.getElementById('name').value = student.fullName;
@@ -55,7 +55,7 @@
                   birthDate : bdEl.value ,
                   grades : grades
              };
-          let resp = await fetch(`http://localhost:8000/api/students/${id}`,{
+          let resp = await fetch(`https://students-merndb.herokuapp.com/api/students/${id}`,{
                method : 'put' ,
                body : JSON.stringify(obj),
                headers : {"Content-type" : "application/json"}                
@@ -68,7 +68,7 @@
             location.href = "mainPage.html"
      }
      async function getGrades(){
-        let resp = await fetch(`http://localhost:8000/api/students/${id}`)
+        let resp = await fetch(`https://students-merndb.herokuapp.com/api/students/${id}`)
         if(resp.ok){
             let student = await resp.json();
             return student.grades;
